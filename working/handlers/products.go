@@ -4,7 +4,8 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-
+	"regexp"
+	"strconv"
 	"github.com/wycliff-ochieng/working/data"
 )
 
@@ -17,11 +18,6 @@ func NewProducts(l *log.Logger) *Products {
 }
 
 func (p *Products) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	/*lp := data.GetProducts()
-	d, err := json.Marshal(lp)
-	if err != nil {
-		http.Error(w, "Unable to chnage to json", http.StatusBadRequest)
-	}*/
 	if r.Method == http.MethodGet {
 		lp := data.GetProducts()
 		d, err := json.Marshal(lp)
@@ -35,8 +31,17 @@ func (p *Products) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
+	if r.Method == http.Method{
+		reg:=regexp.MustCompile(`/([0-9]+)`)
+		g:=reg.FindAllStringSubmatch(r.URI.Path-1)
+		if len(g)!=1{
+			http.Error(w,"invalid URI", http.StatusBadRequest)
+		}
+		idString := g[0][1]
+		id:=strconv.Atoi(idString)
+		return
+	}
 	w.WriteHeader(http.StatusMethodNotAllowed)
-	//w.Write(d)
 }
 
 /*
