@@ -55,5 +55,16 @@ func GetProducts() []*Product {
 }
 
 func AddProduct(p *Product) {
+	p.ID = getNextID()
+	ProductList = append(ProductList,p)
+}
+
+func getNextID(){
+	lastProduct := ProductList[len(ProductList)-1]
+	return lastProduct.ID +1
+}
+
+func UpdateProduct(id int, p *Product) error{
 	return
 }
+func find
