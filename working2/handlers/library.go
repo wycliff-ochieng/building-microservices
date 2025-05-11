@@ -8,15 +8,27 @@ import (
 	"github.com/wycliff-ochieng/working2/data"
 )
 
-type book struct {
+type Book struct {
 	l *log.Logger
 }
 
-func NewBook(l *log.Logger) *book {
-	return &book{l}
+func NewBook(l *log.Logger) *Book {
+	return &Book{l}
 }
 
-func (b *book) getBook(w http.ResponseWriter, r *http.Request) {
+func (b *Book) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		b.getBook(w, r)
+		return
+	}
+	if r.Method == http.MethodPost {
+		b.addBook(w, r)
+		return
+	}
+}
+
+func (b *Book) getBook(w http.ResponseWriter, r *http.Request) {
+	b.l.Println("Handling GET requests")
 	lb := data.GetBooks()
 
 	d, err := json.Marshal(lb)
@@ -27,9 +39,20 @@ func (b *book) getBook(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (b *book) addBook(w http.ResponseWriter, r *http.Request) {
-	b := AddBook()
+func (b Book) addBook(w http.ResponseWriter, r *http.Request) {
+	b.l.Println("Handling POST requests")
+	bk := &data.Book{}
+	err := bk.FromJSON(r.Body)
 	if err != nil {
-		http.Error(w, "Unable to add Book to list", http.StatusMethodNotAllowed)
+		http.Error(w, "invalid URI", http.StatusMethodNotAllowed)
 	}
+	data.AddBook(bk)
+}
+
+func (b *Book) updateBook(w http.ResponseWriter, r *http.Request) {
+	return
+}
+
+func (b *Book) deleteBook(w http.ResponseWriter, r *http.Request) {
+	return
 }
