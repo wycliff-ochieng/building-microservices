@@ -21,6 +21,9 @@ func main() {
 	getRouter := router.Methods("GET").Subrouter()
 	getRouter.HandleFunc("/", th.GetTasks)
 
+	postRouter := router.Methods("POST").Subrouter()
+	postRouter.HandleFunc("/task", th.AddTask)
+
 	l.Println("starting server right now....")
 	http.ListenAndServe(":8080", router)
 }
