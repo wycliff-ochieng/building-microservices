@@ -29,3 +29,7 @@ var TaskList = []*Task{
 func GetTasks() []*Task {
 	return TaskList
 }
+
+func AddTask(t Task) error {
+	return nil
+}
