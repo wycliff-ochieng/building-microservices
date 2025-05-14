@@ -11,6 +11,14 @@ import (
 	"github.com/wycliff-ochieng/working/data"
 )
 
+// A list of my products
+// swagger: response productResponse
+type productResponseWrapper struct {
+	//all the products in the system
+	//in: body
+	Body []data.Product
+}
+
 type Products struct {
 	l *log.Logger
 }
@@ -23,6 +31,7 @@ func (p *Products) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 }
 
+/*
 func (p *Products) GetProduct(w http.ResponseWriter, r *http.Request) {
 	lp := data.GetProducts()
 
@@ -33,6 +42,7 @@ func (p *Products) GetProduct(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write(d)
 }
+*/
 
 func (p *Products) GetProductByID(w http.ResponseWriter, r *http.Request) {
 	vars := strings.Split(r.URL.Path, "/")
