@@ -30,6 +30,12 @@ func GetTasks() []*Task {
 	return TaskList
 }
 
-func AddTask(t Task) error {
-	return nil
+func AddTask(t *Task) {
+	t.ID = getNextID()
+	TaskList = append(TaskList, t)
+}
+
+func getNextID() int {
+	lt := TaskList[len(TaskList)-1]
+	return lt.ID + 1
 }
