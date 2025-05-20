@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package currency;
 
-option go_package = "github.com/wycliff-ochieng/currency/protos;currency";
+option go_package = "/currency";
 
 service Currency{
     rpc GetRate(RateRequest) returns (RateResponse);
