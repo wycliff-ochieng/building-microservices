@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/wycliff-ochieng/blog/data"
+	"github.com/wycliff-ochieng/blog/middleware"
 )
 
 type Post struct {
@@ -30,13 +31,13 @@ func (p *Post) GetPost(w http.ResponseWriter, r *http.Request) {
 	w.Write(d)
 }
 
-type PostKey struct{}
+//type PostKey struct{}
 
 func (p *Post) AddPost(w http.ResponseWriter, r *http.Request) {
 
 	p.l.Println("Handle Post posts method....")
 
-	pst := r.Context().Value(PostKey{})
+	pst := r.Context().Value(middleware.PostKey{})
 	post, ok := pst.(data.Post)
 	if !ok {
 		http.Error(w, "Could not add Post", http.StatusMethodNotAllowed)
