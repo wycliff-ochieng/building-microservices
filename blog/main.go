@@ -23,6 +23,9 @@ func main() {
 	getRouter := router.Methods("GET").Subrouter()
 	getRouter.HandleFunc("/posts", ph.GetPost)
 
+	getRouterID := router.Methods("GET").Subrouter()
+	getRouterID.HandleFunc("/posts/{id}", ph.GetPostByID)
+
 	postRouter := router.Methods("POST").Subrouter()
 	postRouter.HandleFunc("/posts", ph.AddPost)
 	postRouter.Use(middleware.ValidatePostMiddleware)
